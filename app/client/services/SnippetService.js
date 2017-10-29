@@ -19,7 +19,13 @@
       else{
         this.snippets = this.$localStorage.snippets;
         this.currentID = Math.max.apply(Math,this.snippets.map(function(o){return o.id;}));
-        this.snippets.map(function(o){o.searchText = o.title +  " " + o.languages.join(" ");});
+        //this.snippets.map(function(o){o.searchText = o.title +  " " + o.languages.join(" ");});
+        this.snippets.map(function(o){
+          if(o.languages && o.languages.length > 0 )
+          o.searchText = o.title +  " " +  o.languages.join(" ") ;
+          else
+          o.searchText = o.title ;
+      });
         console.log(JSON.stringify(this.snippets));
         //this.currentID = _.last(this.snippets).id + 1;
       }
@@ -64,7 +70,12 @@
 
       fr.onload = (e) => {
         this.$localStorage.snippets = this.snippets = angular.fromJson(fr.result);
-        this.snippets.map(function(o){o.searchText = o.title +  " " + o.languages.join(" ");});
+        this.snippets.map(function(o){
+          if(o.languages && o.languages.length > 0 )
+          o.searchText = o.title +  " " +  o.languages.join(" ") ;
+          else
+          o.searchText = o.title ;
+      });
         this.currentID = _.last(this.snippets).id + 1;
 
         this.$rootScope.$apply();
