@@ -76,7 +76,8 @@
           else
           o.searchText = o.title ;
       });
-        this.currentID = _.last(this.snippets).id + 1;
+        //this.currentID = _.last(this.snippets).id + 1;
+        this.currentID = Math.max.apply(Math,this.snippets.map(function(o){return o.id;}));
 
         this.$rootScope.$apply();
       }
