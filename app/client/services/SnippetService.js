@@ -39,7 +39,11 @@
     addSnippet(snippet){
       snippet.id = ++this.currentID;
       console.log("Ading Snippet " + JSON.stringify(snippet));
-      snippet.searchText = snippet.title + " " + snippet.languages.join(" ");
+      if(snippet.languages && snippet.languages.length > 0 )
+      snippet.searchText = snippet.title +  " " +  snippet.languages.join(" ") ;
+      else
+      snippet.searchText = snippet.title ;
+      
       console.log("Adding = " + JSON.stringify(snippet));
       this.snippets.unshift(angular.copy(snippet));
       //this.snippets.push(angular.copy(snippet));
