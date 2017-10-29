@@ -20,7 +20,7 @@
         this.snippets = this.$localStorage.snippets;
         this.currentID = Math.max.apply(Math,this.snippets.map(function(o){return o.id;}));
         this.snippets.map(function(o){o.searchText = o.title +  " " + o.languages.join(" ");});
-        console.log(JSON.stringify(this.snippets)); 
+        console.log(JSON.stringify(this.snippets));
         //this.currentID = _.last(this.snippets).id + 1;
       }
       console.log("Loaded Snippet is " + JSON.stringify(this.snippets));
@@ -64,6 +64,7 @@
 
       fr.onload = (e) => {
         this.$localStorage.snippets = this.snippets = angular.fromJson(fr.result);
+        this.snippets.map(function(o){o.searchText = o.title +  " " + o.languages.join(" ");});
         this.currentID = _.last(this.snippets).id + 1;
 
         this.$rootScope.$apply();
