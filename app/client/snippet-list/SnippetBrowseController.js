@@ -26,5 +26,29 @@ angular.module("snippetSaver")
       console.log("COMING page no = " + num );
     }
 
+    $scope.filterByText = function (crieteria) {
+          return function(item){
 
+              if(crieteria == undefined || ( crieteria != undefined && crieteria.trim().length == 0 )) {
+                return true ;
+              }
+              else {
+                    var splitSearchChars = crieteria.split(" ");
+                  //  console.log("Item = " + JSON.stringify(item) + " Crieteria = " + crieteria);
+                    var k = 0 ;
+                    var found = true ;
+                    for(; k < splitSearchChars.length ; k++)  {
+                      if( item.searchText.toLowerCase().indexOf(splitSearchChars[k]) >= 0 )
+                        found = true ;
+                      else {
+                        found = false;
+                        break;
+                      }
+                  }
+                   //console.log("RETURNING FOUND = " + found);
+                   return found ;
+              }
+
+          }
+    }
   });

@@ -19,11 +19,13 @@
       else{
         this.snippets = this.$localStorage.snippets;
         this.currentID = Math.max.apply(Math,this.snippets.map(function(o){return o.id;}));
+        this.snippets.map(function(o){o.searchText = o.title +  " " + o.languages.join(" ");});
+        console.log(JSON.stringify(this.snippets)); 
         //this.currentID = _.last(this.snippets).id + 1;
       }
       console.log("Loaded Snippet is " + JSON.stringify(this.snippets));
       console.log("Current ID = " + JSON.stringify(this.currentID));
-      
+
     }
 
 
@@ -31,6 +33,8 @@
     addSnippet(snippet){
       snippet.id = ++this.currentID;
       console.log("Ading Snippet " + JSON.stringify(snippet));
+      snippet.searchText = snippet.title + " " + snippet.languages.join(" ");
+      console.log("Adding = " + JSON.stringify(snippet));
       this.snippets.unshift(angular.copy(snippet));
       //this.snippets.push(angular.copy(snippet));
       this.saveSnippets();
