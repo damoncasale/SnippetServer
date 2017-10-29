@@ -33,7 +33,7 @@ angular.module("snippetSaver")
                 return true ;
               }
               else {
-                    var splitSearchChars = crieteria.split(" ");
+                    var splitSearchChars = crieteria.toLowerCase().split(" ");
                   //  console.log("Item = " + JSON.stringify(item) + " Crieteria = " + crieteria);
                     var k = 0 ;
                     var found = true ;
