@@ -123,7 +123,7 @@
           </div> -->
         </div>
         <div class="card-body">
-          <div ng-if="snippet.description && bc.showDescription[snippet.id]" markdown-to-html="snippet.description||''">
+          <div ng-if="snippet.description && bc.showDescription[snippet.id]" markdown-to-html="snippet.description||''" style="height: 178.889px;">
           </div>
           <div ng-if="!bc.showDescription[snippet.id]" ace-editor ng-model="snippet.snippet" language="snippet.languages[0]" readonly="true"
              related-id="snippet.id">
@@ -133,26 +133,27 @@
         <div class="card-footer">
           <div class="row">
              <div class="text-left col-md-7 col-lg-7 col-sm-7">
-              <button class="language mr-auto" ng-click="bc.searchText=language" ng-repeat="language in snippet.languages">{{language}}</button>
+              <button class="language mr-auto" ng-click="bc.searchText=language.trim()" ng-repeat="language in snippet.languages">{{language}}</button>
             </div>
-              <div class="btn-group btn-group-md  pull-right  text-right" style="height:40px;" role="group" aria-label="Code or Description">
+              <div class="col float-right text-right">
+                <div class="btn-group btn-group-sm text-right" style="height:40px;float:right" role="group" aria-label="Code or Description">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      ng-class="{'active':!bc.showDescription[snippet.id]}"
+                      ng-click="bc.showDescription[snippet.id]=false">
+                      code
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      ng-disabled="!snippet.description"
+                      ng-class="{'active':bc.showDescription[snippet.id]}"
+                      ng-click="bc.showDescription[snippet.id]=true">
+                      desc
+                    </button>
 
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    ng-class="{'active':!bc.showDescription[snippet.id]}"
-                    ng-click="bc.showDescription[snippet.id]=false">
-                    code
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    ng-disabled="!snippet.description"
-                    ng-class="{'active':bc.showDescription[snippet.id]}"
-                    ng-click="bc.showDescription[snippet.id]=true">
-                    desc
-                  </button>
-
+                </div>
               </div>
             </div>
         </div>
