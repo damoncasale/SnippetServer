@@ -4,7 +4,9 @@ angular.module("snippetSaver")
     $scope.pageSize = 9;
     var ctrl = this;
     ctrl.SnippetService = SnippetService;
-    ctrl.showDescription = {}
+    ctrl.showDescription = {};
+    $scope.searchTextInComplete = "";
+    $scope.searchText = "";
 
     ctrl.toggleDescription = value => SnippetService.snippets.forEach( item => ctrl.showDescription[item.id] = value);
 
@@ -26,10 +28,26 @@ angular.module("snippetSaver")
       console.log("COMING page no = " + num );
     }
 
+    // Write the code here to watch the field and then change the scope.
+    $scope.keyPressed = function (keyEvent) {
+      //console.log(keyEvent);
+      //console.log($scope.searchTextInComplete );
+    if (keyEvent.keyCode == 13) {
+
+        console.log('presiono enter ' + $scope.searchTextInComplete);
+        $scope.searchText = $scope.searchTextInComplete;
+
+    }
+};
+
+    $scope.doSearch = function(language) {
+      $scope.searchText = $scope.searchTextInComplete = language;
+    }
+
     $scope.filterByText = function (crieteria) {
           return function(item){
-
-              if(crieteria == undefined || ( crieteria != undefined && crieteria.trim().length == 0 )) {
+            console.log("INcoming crieteria = " + crieteria);
+              if(crieteria == undefined ) {
                 return true ;
               }
               else {
@@ -37,8 +55,11 @@ angular.module("snippetSaver")
                   //  console.log("Item = " + JSON.stringify(item) + " Crieteria = " + crieteria);
                     var k = 0 ;
                     var found = true ;
+                    //console.log("COMING Here ");
                     for(; k < splitSearchChars.length ; k++)  {
-                      if( item.searchText.toLowerCase().indexOf(splitSearchChars[k]) >= 0 )
+                      //console.log("COMING Here in for loop ");
+                      //console.log("Search text in item = " + item.searchText) ;
+                      if( item.searchText != undefined && item.searchText.toLowerCase().indexOf(splitSearchChars[k]) >= 0 )
                         found = true ;
                       else {
                         found = false;
