@@ -123,7 +123,9 @@
           </div> -->
         </div>
         <div class="card-body">
-          <div ng-if="snippet.description && bc.showDescription[snippet.id]" markdown-to-html="snippet.description||''" style="height: 178.889px;">
+
+           <div ng-if="bc.showDescription[snippet.id]" markdown-to-html="snippet.description||''" style="height: 178.889px;">
+
           </div>
           <div ng-if="!bc.showDescription[snippet.id]" ace-editor ng-model="snippet.snippet" language="snippet.languages[0]" readonly="true"
              related-id="snippet.id">
