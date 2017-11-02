@@ -26,7 +26,10 @@ angular.module('snippetSaver')
             newVals[0] = "c_cpp";
           if(newVals[0]=="JS")
             newVals[0] = "javascript";
-          editor.getSession().setMode("ace/mode/"+newVals[0].toLowerCase());
+          editor.getSession().setMode({
+            path: "ace/mode/"+newVals[0].toLowerCase(),
+            inline: newVals[0] === 'PHP' // setting to true fixes PHP highlighting
+          });
         }
         if(newVals[1]){
           EditorManager.updateEditorMap(newVals[1], editor);
