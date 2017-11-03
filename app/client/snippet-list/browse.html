@@ -124,7 +124,7 @@
         </div>
         <div class="card-body">
 
-           <div ng-if="bc.showDescription[snippet.id]" ng-bind="snippet.description||''" style="height: 178.889px;">
+           <div ng-if="bc.showDescription[snippet.id]" ng-bind="snippet.description||''" style="height: 178.889px; white-space: pre-wrap;">
 
           </div>
           <div ng-if="!bc.showDescription[snippet.id]" ace-editor ng-model="snippet.snippet" language="snippet.languages[0]" readonly="true"
