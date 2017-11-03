@@ -24,6 +24,11 @@ angular.module("snippetSaver")
       editor.getSelection().clearSelection();
     };
 
+    ctrl.clearSearchText = function() {
+      $scope.searchTextInComplete = "";
+      $scope.searchText = "";
+    };
+
     $scope.pageChangeHandler = function(num) {
       console.log("COMING page no = " + num );
     }
