@@ -22,7 +22,7 @@
                 <a class="nav-link" ng-class="{'active':sdc.showPreview}" ng-click="sdc.showPreview = true">Preview</a>
               </li>
             </ul>
-            <div markdown-to-html="sdc.loadedSnippet.description || ''" ng-if="sdc.showPreview"></div>
+            <div ng-bind="sdc.loadedSnippet.description || ''" ng-if="sdc.showPreview"></div>
             <textarea type="text" class="form-control" ng-model="sdc.loadedSnippet.description" ng-if="!sdc.showPreview"></textarea>
           </div>
           <div style="height:400px; font-size:16pt" ace-editor ng-model="sdc.loadedSnippet.snippet" language="sdc.loadedSnippet.languages[0]">
