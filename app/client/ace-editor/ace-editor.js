@@ -12,10 +12,10 @@ angular.module('snippetSaver')
     link:function(scope, iElem, iAttrs, ngModel){
       if (!ngModel) return; // do nothing if no ng-model
 
-      var editor = ace.edit(iElem[0]);
-      editor.setTheme("ace/theme/monokai");
+      scope.editor = ace.edit(iElem[0]);
+      scope.editor.setTheme("ace/theme/monokai");
       console.log(scope.readonly);
-      editor.setReadOnly(scope.readonly=='true');
+      scope.editor.setReadOnly(scope.readonly=='true');
 
       var deregister = scope.$watchGroup(['language', 'relatedId'], function(newVals){
         if(!newVals || !newVals[0])
@@ -26,17 +26,14 @@ angular.module('snippetSaver')
             newVals[0] = "c_cpp";
           if(newVals[0]=="JS")
             newVals[0] = "javascript";
-          editor.getSession().setMode({
-            path: "ace/mode/"+newVals[0].toLowerCase(),
-            inline: newVals[0] === 'PHP' // setting to true fixes PHP highlighting
-          });
+          scope.editor.getSession().setMode("ace/mode/"+newVals[0].toLowerCase());
         }
         if(newVals[1]){
-          EditorManager.updateEditorMap(newVals[1], editor);
+          EditorManager.updateEditorMap(newVals[1], scope.editor);
         }
       })
       
-      editor.commands.addCommand({
+      scope.editor.commands.addCommand({
           name: 'save',
           bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
           exec: function(editor) {
@@ -48,21 +45,26 @@ angular.module('snippetSaver')
 
       // Specify how UI should be updated
       ngModel.$render = function() {
-        editor.setValue(ngModel.$viewValue || '')
-        editor.getSelection().clearSelection();
+        scope.editor.setValue(ngModel.$viewValue || '')
+        scope.editor.getSelection().clearSelection();
       };
 
       // Listen for change events to enable binding
-      editor.on('change', function() {
+      scope.editor.on('change', function() {
         scope.$evalAsync(read);
       });
       //read(); // initialize
 
       // Write data to the model
       function read() {
-        var value = editor.getValue();
+        var value = scope.editor.getValue();
         ngModel.$setViewValue(value);
       }
+
+      scope.$on("$destroy", function() {
+        scope.editor.destroy();
+        delete scope.editor;
+      });
     }
   }
 });
