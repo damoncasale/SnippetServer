@@ -81,7 +81,7 @@
   <div class="row">
     <!--<div class="col-md-4 col-lg-4" ng-repeat="snippet in bc.SnippetService.snippets|filter:bc.searchText|orderBy:'-id' track by snippet.id"> -->
       <!--<div class="col-md-4 col-lg-4" dir-paginate="snippet in bc.SnippetService.snippets | filter:q | filter: { 'searchText' : bc.searchText }| itemsPerPage: pageSize | orderBy : '-id' " current-page="currentPage"> -->
-      <div class="col-md-4 col-lg-4" dir-paginate="snippet in bc.SnippetService.snippets | filter:q | filter: filterByText(searchText) | itemsPerPage: pageSize | orderBy : '-id' track by snippet.created" current-page="currentPage">
+      <div class="col-md-4 col-lg-4" dir-paginate="snippet in bc.SnippetService.snippets | filter:q | filter: filterByText(searchText) | itemsPerPage: pageSize track by snippet.created" current-page="currentPage">
 
       <div class="snippet-card card card-default">
         <div class="card-header">

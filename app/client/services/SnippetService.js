@@ -70,12 +70,12 @@
                         self.currentID = _.last(self.snippets).id + 1;
                         _.forEach(self.snippets, function(snippet) {
                             if ("undefined" === typeof snippet.created) {
-                                // Sort in reverse order of ID
-                                snippet.created = timestamp - (snippet.id * 1000);
+                                snippet.created = timestamp - ((self.currentID - snippet.id) * 1000);
                             }
                         });
+                        // Sort in descending order of created date (most recent first)
                         self.snippets.sort(function(a, b) {
-                            return a.created - b.created;
+                            return b.created - a.created;
                         });
                         self.idbSnippets.setArray(self.store, null, resp.data).then(function() {
                             // Do nothing
@@ -98,12 +98,12 @@
                         });
                         _.forEach(self.snippets, function(snippet) {
                             if ("undefined" === typeof snippet.created) {
-                                // Sort in reverse order of ID
-                                snippet.created = timestamp - (snippet.id * 1000);
+                                snippet.created = timestamp - ((self.currentID - snippet.id) * 1000);
                             }
                         });
+                        // Sort in descending order of created date (most recent first)
                         self.snippets.sort(function(a, b) {
-                            return a.created - b.created;
+                            return b.created - a.created;
                         });
                         self.$rootScope.$apply();
                         console.log("Loaded Snippet is " + JSON.stringify(self.snippets));
