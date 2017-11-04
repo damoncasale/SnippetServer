@@ -191,14 +191,14 @@
 
       fr.onload = (e) => {
         this.snippets = angular.fromJson(fr.result);
-        self.idbSnippets.clear(self.store).then(function() {
-            var timestamp = Math.floor(new Date().getTime() / 1000);
+        var timestamp = Math.floor(new Date().getTime() / 1000);
             _.forEach(self.snippets, function(snippet) {
                 if ("undefined" === typeof snippet.created) {
                     // Sort in reverse order of ID
                     snippet.created = timestamp - (snippet.id * 1000);
                 }
             });
+        self.idbSnippets.clear(self.store).then(function() {
             self.idbSnippets.setArray(self.store, null, self.snippets).then(function() {
                 // Do nothing
             });
