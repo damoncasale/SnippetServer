@@ -125,7 +125,9 @@
       snippet.created = Math.floor(new Date().getTime() / 1000);
       console.log("Adding Snippet " + JSON.stringify(snippet));
       if(snippet.languages && snippet.languages.length > 0 ) {
-        snippet.languages = _.union([snippet.languages])[0];
+        snippet.languages = snippet.languages.filter(function(value, index, self) {
+            return self.indexOf(value) === index;
+        });
         snippet.searchText = snippet.title +  " " +  snippet.languages.join(" ") ;
       } else
         snippet.searchText = snippet.title ;
@@ -140,7 +142,9 @@
     updateSnippet(snippet) {
       console.log("Updating snippet " + JSON.stringify(snippet));
       if(snippet.languages && snippet.languages.length > 0 ) {
-        snippet.languages = _.union([snippet.languages])[0];
+        snippet.languages = snippet.languages.filter(function(value, index, self) {
+            return self.indexOf(value) === index;
+        });
         snippet.searchText = snippet.title +  " " +  snippet.languages.join(" ") ;
       } else
         snippet.searchText = snippet.title ;
