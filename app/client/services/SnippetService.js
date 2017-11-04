@@ -65,8 +65,18 @@
             self.idbSnippets.keys(db).then(function(keys) {
                 if (!keys.length) {
                     $http.get('data.json').then((resp) => {
+                        var timestamp = Math.floor(new Date().getTime() / 1000);
                         self.snippets = resp.data;
                         self.currentID = _.last(self.snippets).id + 1;
+                        _.forEach(self.snippets, function(snippet) {
+                            if ("undefined" === typeof snippet.created) {
+                                // Sort in reverse order of ID
+                                snippet.created = timestamp - (snippet.id * 1000);
+                            }
+                        });
+                        self.snippets.sort(function(a, b) {
+                            return a.created - b.created;
+                        });
                         self.idbSnippets.setArray(self.store, null, resp.data).then(function() {
                             // Do nothing
                         });
@@ -76,6 +86,7 @@
                     });
                 } else {
                     self.idbSnippets.getAll(self.store).then(function(snippets) {
+                        var timestamp = Math.floor(new Date().getTime() / 1000);
                         self.snippets = snippets;
                         self.currentID = Math.max.apply(Math,self.snippets.map(function(o){return o.id;}));
                         //self.snippets.map(function(o){o.searchText = o.title +  " " + o.languages.join(" ");});
@@ -84,6 +95,15 @@
                                 o.searchText = o.title +  " " +  o.languages.join(" ") ;
                             else
                                 o.searchText = o.title ;
+                        });
+                        _.forEach(self.snippets, function(snippet) {
+                            if ("undefined" === typeof snippet.created) {
+                                // Sort in reverse order of ID
+                                snippet.created = timestamp - (snippet.id * 1000);
+                            }
+                        });
+                        self.snippets.sort(function(a, b) {
+                            return a.created - b.created;
                         });
                         self.$rootScope.$apply();
                         console.log("Loaded Snippet is " + JSON.stringify(self.snippets));
@@ -102,6 +122,7 @@
 
     addSnippet(snippet){
       snippet.id = ++this.currentID;
+      snippet.created = Math.floor(new Date().getTime() / 1000);
       console.log("Adding Snippet " + JSON.stringify(snippet));
       if(snippet.languages && snippet.languages.length > 0 ) {
         snippet.languages = _.union([snippet.languages])[0];
@@ -171,12 +192,26 @@
       fr.onload = (e) => {
         this.snippets = angular.fromJson(fr.result);
         self.idbSnippets.clear(self.store).then(function() {
+            var timestamp = Math.floor(new Date().getTime() / 1000);
+            _.forEach(self.snippets, function(snippet) {
+                if ("undefined" === typeof snippet.created) {
+                    // Sort in reverse order of ID
+                    snippet.created = timestamp - (snippet.id * 1000);
+                }
+            });
             self.idbSnippets.setArray(self.store, null, self.snippets).then(function() {
                 // Do nothing
             });
         })
         .catch(function() {
             // No items in db, but that's okay
+            var timestamp = Math.floor(new Date().getTime() / 1000);
+            _.forEach(self.snippets, function(snippet) {
+                if ("undefined" === typeof snippet.created) {
+                    // Sort in reverse order of ID
+                    snippet.created = timestamp - (snippet.id * 1000);
+                }
+            });
             self.idbSnippets.setArray(self.store, null, self.snippets).then(function() {
                 // Do nothing
             });
