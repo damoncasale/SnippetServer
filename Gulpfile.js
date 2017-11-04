@@ -73,6 +73,7 @@ gulp.task('usemin', ['clean'], function() {
     .pipe(usemin({
       css: [ less(), rev() ],
       html: [ htmlmin({ collapseWhitespace: true }) ],
+      //jsconcat: [ 'concat' ],
       jsconcat: [ 'concat', uglify() ],
       js: [ babel({presets:["latest"]}), ngAnnotate(), uglify().on('error', gutil.log), rev() ],
       inlinejs: [ babel({presets:["latest"]}), ngAnnotate() ],

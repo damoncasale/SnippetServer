@@ -18,17 +18,19 @@ angular.module('snippetSaver')
       scope.editor.setReadOnly(scope.readonly=='true');
 
       var deregister = scope.$watchGroup(['language', 'relatedId'], function(newVals){
+        var lang;
         if(!newVals || !newVals[0])
           return;
         if(newVals[0])
         {
-          if(newVals[0]=="C" || newVals[0] == "C++")
-            newVals[0] = "c_cpp";
-          if(newVals[0]=="JS")
-            newVals[0] = "javascript";
+          lang = ("string" === typeof newVals[0]) ? newVals[0] : newVals[0][0];
+          if(lang=="C" || lang == "C++")
+            lang = "c_cpp";
+          if(lang=="JS")
+            lang = "javascript";
           scope.editor.getSession().setMode({
-            path: "ace/mode/"+newVals[0].toLowerCase(),
-            inline: newVals[0] === 'PHP' // setting to true fixes PHP highlighting
+            path: "ace/mode/"+lang.toLowerCase(),
+            inline: lang === 'PHP' // setting to true fixes PHP highlighting
           });
         }
         if(newVals[1]){
