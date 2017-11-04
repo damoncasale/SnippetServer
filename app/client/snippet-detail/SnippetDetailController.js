@@ -4,6 +4,10 @@ angular.module('snippetSaver')
 
     ctrl.showPreview = true;
 
+    ctrl.updateLanguages = function() {
+        SnippetService.updateSnippet(this.loadedSnippet);
+    };
+
     SnippetService
       .getSnippetById(parseInt($stateParams.id))
       .then((data) => {
