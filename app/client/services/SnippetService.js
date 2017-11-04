@@ -201,8 +201,12 @@
         _.forEach(self.snippets, function(snippet) {
             if ("undefined" === typeof snippet.created) {
                 // Sort in reverse order of ID
-                snippet.created = timestamp - (snippet.id * 1000);
+                snippet.created = timestamp - ((self.currentID - snippet.id) * 1000);
             }
+        });
+        // Sort in descending order of created date (most recent first)
+        self.snippets.sort(function(a, b) {
+            return b.created - a.created;
         });
         self.idbSnippets.clear(self.store).then(function() {
             self.idbSnippets.setArray(self.store, null, self.snippets).then(function() {
