@@ -10,7 +10,7 @@ angular.module('snippetSaver')
                 // do something to format user input
                 // to be more "computer-friendly"
                 input.replace(/\s/g, '');
-                var modifiedInput = input.split(',')
+                var modifiedInput = input.split(/,\s*/)
                 return modifiedInput;
             });
 
@@ -18,7 +18,7 @@ angular.module('snippetSaver')
                 // do something to format user input
                 // to be more "human-friendly"
                 if(input && input.join)
-                var modifiedInput = input.join(',')
+                var modifiedInput = input.join(', ')
                 return modifiedInput;
             });
         }
