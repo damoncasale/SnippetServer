@@ -104,7 +104,7 @@
       snippet.id = ++this.currentID;
       console.log("Adding Snippet " + JSON.stringify(snippet));
       if(snippet.languages && snippet.languages.length > 0 ) {
-        snippet.languages = _.union([snippet.languages]);
+        snippet.languages = _.union([snippet.languages])[0];
         snippet.searchText = snippet.title +  " " +  snippet.languages.join(" ") ;
       } else
         snippet.searchText = snippet.title ;
