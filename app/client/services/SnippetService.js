@@ -114,7 +114,28 @@
       //this.snippets.push(angular.copy(snippet));
       this.saveSnippet(snippet);
       this.currentSnippet = {};
-}
+    }
+
+    updateSnippet(snippet) {
+      console.log("Updating snippet " + JSON.stringify(snippet));
+      if(snippet.languages && snippet.languages.length > 0 ) {
+        snippet.languages = _.union([snippet.languages])[0];
+        snippet.searchText = snippet.title +  " " +  snippet.languages.join(" ") ;
+      } else
+        snippet.searchText = snippet.title ;
+
+      console.log("Updating = " + JSON.stringify(snippet));
+      var index = _.findIndex(this.snippets, function(s) {
+        return s.id === snippet.id;
+      });
+      if (-1 !== index) {
+        this.snippets.splice(index, 1, snippet);
+      } else {
+        this.snippets.unshift(angular.copy(snippet));
+      }
+      this.saveSnippet(snippet);
+      this.currentSnippet = {};
+    }
 
     deleteSnippet(snippetId){
       console.log("PRIOR -> " + JSON.stringify(this.snippets) );

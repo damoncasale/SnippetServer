@@ -9,7 +9,10 @@
           <h1>
             <input type="text" ng-model="sdc.loadedSnippet.title"/>
           </h1>
-          <input type="text" string-to-array ng-model="sdc.loadedSnippet.languages"/>
+          <input type="text" string-to-array
+            ng-model="sdc.loadedSnippet.languages"
+            ng-model-options="{updateOn: 'blur'}"
+            ng-change="sdc.updateLanguages()" />
         </div>
         <div class="card-body">
 
