@@ -26,7 +26,8 @@
     "ace-builds": "^1.2.6"
   },
   "dependencies": {
-    "angularUtils-pagination": "angular-utils-pagination#^0.11.1"
+    "angularUtils-pagination": "angular-utils-pagination#^0.11.1",
+    "idb": "https://github.com/jakearchibald/idb.git#^2.0.4"
   },
   "resolutions": {
     "angular": "1.6.4"
